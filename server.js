@@ -3,6 +3,7 @@ const app = express();
 const expressLayouts = require('express-ejs-layouts');//get expressLayout to project 
 const path = require('path');//declare path library
 const indexRouter = require('./routes/index');//declare router index.js 
+const authorRouter = require('./routes/authors')//declare router authors.js
 const mongoose = require('mongoose');
 require('dotenv').config();//declare dotenv
 
@@ -13,9 +14,11 @@ app.set('views', __dirname + '/views') //use all views follow __dirname/views/na
 app.set('layout', 'layouts/layout') // set layouts/layout as body section
 
 //middleware
-app.use(expressLayouts)//using express layout
+app.use(express.urlencoded({extended: false}))//convert query string to URL Encoded(when :'false')
+app.use(expressLayouts)//using express layout (no node to declare <!DOCTyPE> with every single ejs file)
 app.use(express.static(path.join(__dirname,'public')))//using public static like : css, js, images
 app.use('/', indexRouter)//using index.js router
+app.use('/authors', authorRouter)//using index.js router
 
 //connect to mongodb
 mongoose.connect(process.env.DATABASE_URL)
