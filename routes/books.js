@@ -5,7 +5,6 @@ const path = require('path')
 const fs = require('fs')
 const Author = require('../models/author')
 const multer = require('multer');//multer is a library to upload file
-const { length } = require('mongoose/lib/helpers/query/validOps');
 
 const imageMineTypes = ['image/jpeg','image/gif','image/png'] 
 
@@ -51,7 +50,7 @@ router.get('/new',  async(req, res) => {
     renderNewBook(res, new Book())//render new books
 })
 //creating new book
-router.post('/', upload.single('cover'), async(req, res) => {//add upload file to accept file
+router.post('/', async(req, res) => {//add upload file to accept file
 
     const fileName = req.file != null ? req.file.filename : null //filename : The name of the file within the destination
     //create new book model
@@ -97,5 +96,15 @@ const removeBookCover = (filename) => {
         if (err) throw err;
     })
 }
+
+
+// const saveCover = (book, coverEncoded) => {
+//     if (coverEncoded == null) return
+//     const cover = JSON.parse(coverEncoded)
+//     if (cover != null && imageMineTypes.includes(cover.type)){
+//         book.coverImage = new Buffer.from(cover.data, 'base64')
+//         book.coverImageType = cover.type
+//     }
+// }
 
 module.exports = router
