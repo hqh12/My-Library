@@ -4,6 +4,7 @@ const expressLayouts = require('express-ejs-layouts');//get expressLayout to pro
 const path = require('path');//declare path library
 const indexRouter = require('./routes/index');//declare router index.js 
 const authorRouter = require('./routes/authors')//declare router authors.js
+const bookRouter = require('./routes/books')//declare router books.js
 const mongoose = require('mongoose');
 require('dotenv').config();//declare dotenv
 
@@ -19,7 +20,7 @@ app.use(expressLayouts)//using express layout (no node to declare <!DOCTyPE> wit
 app.use(express.static(path.join(__dirname,'public')))//using public static like : css, js, images
 app.use('/', indexRouter)//using index.js router
 app.use('/authors', authorRouter)//using index.js router
-
+app.use('/books', bookRouter)//using book router
 //connect to mongodb
 mongoose.connect(process.env.DATABASE_URL)
 .then(() => console.log('Connected'))
